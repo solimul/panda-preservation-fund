@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda Conservation Fund - Save the Giant Pandas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a936f;
+            --secondary-color: #114b5f;
+            --accent-color: #88d498;
+            --dark-color: #0a2342;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .navbar {
+            background-color: var(--dark-color) !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(26, 147, 111, 0.8), rgba(17, 75, 95, 0.8));
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 600;
+            padding: 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .funders-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .connect-wallet {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .minimum-amount {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .panda-icon {
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+
+        .progress {
+            height: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+
+        .impact-stats {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .funder-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .funder-item:last-child {
+            border-bottom: none;
+        }
+
+        .error-bold-italic {
+            font-weight: bold;
+            font-style: italic;
+            color: red;
+        }
+
+        .msg-bold-italic {
+            font-weight: bold;
+            font-style: italic;
+            color: blue;
+        }
+
+        /* New styles for navbar buttons */
+        .navbar-nav .nav-item {
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .navbar-nav {
+                padding-top: 1rem;
+            }
+
+            .navbar-nav .nav-item {
+                margin-left: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Glowing animation */
+        @keyframes glow-pulse {
+            0% {
+                box-shadow: 0 0 5px red;
+            }
+
+            50% {
+                box-shadow: 0 0 20px red;
+            }
+
+            100% {
+                box-shadow: 0 0 5px red;
+            }
+        }
+
+        .glowing-alert {
+            animation: glow-pulse 1.5s infinite;
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        /* Make sure the container has some spacing */
+        #interactionStatus {
+            margin: 15px 0;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* Focus styles for accessibility */
+        #interactionStatus:focus {
+            outline: 2px dashed var(--primary-color);
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation with withdraw button -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-paw me-2"></i>Panda Conservation Fund
+            <span class="badge bg-success ms-2" id="heroSpan">Powered By </span>
+        </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button id="connectWalletBtn" class="btn btn-accent">
+                            <i class="fas fa-wallet me-2"></i>Connect Wallet
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="withdrawFundsBtn" class="btn btn-outline-light me-2">
+                            <i class="fas fa-hand-holding-usd me-2"></i>Withdraw
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+    </nav>
+
+    
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Help Save the Giant Pandas</h1>
+            <p class="lead">Your Ethereum contribution supports panda conservation efforts, habitat protection, and
+                research programs.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-4 overlay rounded-3">
+        <!-- Wallet Connection Status -->
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <div class="connect-wallet text-center">
+                    <div id="interactionStatus">
+                        <p class="msg-bold-italic">Connect your wallet to contribute to panda conservation</p>
+                    </div>
+                    <div id="ownerControls" class="d-none">
+                        <p class="text-success fw-bold"><i class="fas fa-crown me-2"></i>You are the campaign manager
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Fund Section -->
+            <div class="col-lg-7">
+                <!-- Campaign Info -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-info-circle me-2"></i>About the Campaign
+                    </div>
+                    <div class="card-body">
+                        <p>Giant pandas are no longer endangered, but they remain vulnerable with only about 1,800 left
+                            in the wild. Your contribution helps:</p>
+                        <ul>
+                            <li>Protect and expand panda habitats</li>
+                            <li>Support breeding and research programs</li>
+                            <li>Fund anti-poaching patrols</li>
+                            <li>Educate local communities</li>
+                        </ul>
+                        <div class="impact-stats">
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <div class="stat-value">1 ETH</div>
+                                    <div class="stat-label">Protects 1 acre for 1 year</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-value">5 ETH</div>
+                                    <div class="stat-label">Supports a researcher for 1 month</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-value">10 ETH</div>
+                                    <div class="stat-label">Funds anti-poaching patrol for 3 months</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fund Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-donate me-2"></i>Make a Contribution
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="fundAmount" class="form-label">Amount (ETH)</label>
+                            <input type="number" class="form-control" id="fundAmount" step="0.01" min=".01" value=".01">
+                            <div class="minimum-amount">Minimum contribution: 0.01 ETH</div>
+                        </div>
+                        <button id="fundBtn" class="btn btn-primary w-100 py-3">
+                            <i class="fas fa-paw me-2"></i>Contribute to Save Pandas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="col-lg-5">
+                <!-- Campaign Progress -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line me-2"></i>Campaign Progress
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Raised: <strong id="totalRaised">0 ETH</strong></span>
+                            <span>Goal: <strong>100 ETH</strong></span>
+                        </div>
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="totalFunders">0</div>
+                                    <div class="stat-label">Total Contributors</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="yourContribution">0 ETH</div>
+                                    <div class="stat-label">Your Contribution</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Contributors -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-users me-2"></i>Recent Panda Supporters
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="funders-list p-3" id="fundersList">
+                            <p class="text-muted text-center my-4">Be the first to support panda conservation!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <h5><i class="fas fa-paw me-2"></i>Panda Conservation Fund</h5>
+                    <p>Transparent, blockchain-based funding for panda conservation efforts worldwide.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-left"> <!-- Left-align text content -->
+                        <p class="mb-1 font-monospace">Chain: <span id="chainName">Sepolia</span></p>
+                        <p class="mb-1 font-monospace">Contract: <span id="contractAddress">0x...</span></p>
+                        <p></p>
+                    </div>
+                    
+                    <div class="text-md-end mt-3"> <!-- Right-align social icons on md+ screens -->
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Transaction Modal -->
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalTitle">Transaction in Progress</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div id="transactionLoading">
+                        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h5>Processing Your Contribution</h5>
+                        <p>Please confirm the transaction in your wallet</p>
+                        <div class="progress mt-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="transactionSuccess" class="d-none">
+                        <i class="fas fa-check-circle text-success mb-3" style="font-size: 3rem;"></i>
+                        <h5>Thank You for Your Support!</h5>
+                        <p>Your contribution will help protect giant pandas and their habitat.</p>
+                        <div class="mt-4">
+                            <i class="fas fa-paw panda-icon"></i>
+                            <i class="fas fa-paw panda-icon"></i>
+                            <i class="fas fa-paw panda-icon"></i>
+                        </div>
+                        <a href="#" class="btn btn-primary mt-3 px-4" data-bs-dismiss="modal">Close</a>
+                    </div>
+                    <div id="transactionError" class="d-none">
+                        <i class="fas fa-times-circle text-danger mb-3" style="font-size: 3rem;"></i>
+                        <h5>Transaction Not Completed</h5>
+                        <p id="errorMessage">There was an issue with your transaction. Please try again.</p>
+                        <a href="#" class="btn btn-outline-secondary mt-3 px-4" data-bs-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Modal -->
+    <div class="modal fade" id="impactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">How Your Contribution Helps</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1598755257130-c2aaca1f061c?q=80&w=2070&auto=format&fit=crop"
+                                    class="card-img-top" alt="Panda Habitat">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-tree panda-icon"></i>Habitat Protection</h5>
+                                    <p>Your funds help protect and expand bamboo forests, the primary habitat of giant
+                                        pandas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?q=80&w=2070&auto=format&fit=crop"
+                                    class="card-img-top" alt="Panda Research">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-flask panda-icon"></i>Research Programs</h5>
+                                    <p>Support scientific studies to better understand panda behavior and conservation
+                                        needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?q=80&w=2070&auto=format&fit=crop"
+                                    class="card-img-top" alt="Panda Cub">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-baby panda-icon"></i>Breeding Programs</h5>
+                                    <p>Fund breeding centers that help increase the panda population through careful
+                                        genetic management.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1583511655826-05700442b31b?q=80&w=2070&auto=format&fit=crop"
+                                    class="card-img-top" alt="Community Education">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-graduation-cap panda-icon"></i>Community Education</h5>
+                                    <p>Support programs that teach local communities about sustainable practices that
+                                        protect pandas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+    <script type="module" src="./index-ts.ts"></script>
+</body>
+
+</html>
