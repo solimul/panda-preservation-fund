@@ -129,7 +129,7 @@ async function writeContract(funName: string, requiresValue: boolean = false, va
 /** getters */
 async function getCurrentChainID(): Promise<number> {
     if (typeof window.ethereum === "undefined") {
-        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda conservation.</span>`);
+        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda preservation.</span>`);
         throw new Error("Wallet not installed");
     }
     const chainIdHex = await window.ethereum!.request({ method: 'eth_chainId' });
@@ -204,7 +204,7 @@ async function disconnect(): Promise<void> {
 
 async function connect(): Promise<void> {
     if (typeof window.ethereum == "undefined") {
-        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda conservation.</span>`);
+        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda preservation.</span>`);
         return;
     }
     const accounts = await window.ethereum!.request({ method: 'eth_accounts' });
@@ -295,7 +295,7 @@ function highlightStatusElement(): void {
 /** Cores */
 async function fund(): Promise<void> {
     if (typeof window.ethereum == "undefined") {
-        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda conservation.</span>`);
+        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda preservation.</span>`);
         return;
     }
     let ethAmount: number = parseFloat(fundAmount.value);
@@ -336,7 +336,7 @@ async function main(): Promise<void> {
 
 
     if (typeof window.ethereum === 'undefined') {
-        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda conservation.</span>`);
+        updateStatus(`<span class="error-bold-italic">Please install an Ethereum-compatible wallet (such as MetaMask or Coinbase Wallet) to fund panda preservation.</span>`);
         return;
     }
     setUp();
