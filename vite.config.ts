@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/panda-conservation/",
+  base: "/panda-conservation-fund/",
 });
 
